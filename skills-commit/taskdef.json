@@ -1,0 +1,30 @@
+{
+  "executionRoleArn": "arn:aws:iam::362708816803:role/skills-ecs-task-role",
+  "containerDefinitions": [
+    {
+      "name": "skills-container",
+      "image": "<IMAGE>",
+      "essential": "true",
+      "portMappings": [
+        {
+          "protocol": "tcp",
+          "containerPort": 80
+        }
+      ],
+      "healthCheck": {
+        "retries": 3,
+        "command": [
+          "CMD-SHELL",
+          "curl -f http://localhost:80/health || exit 1"
+        ],
+        "timeout": 5,
+        "interval": 30,
+        "startPeriod": null
+      }
+    }
+  ],
+  "requiresCompatibilities": ["EC2"],
+  "cpu": "512",
+  "memory": "512",
+  "family": "skills-td"
+}
